@@ -13,5 +13,6 @@
 @interface ResturantListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MKMapViewDelegate>
 
 @property IBOutlet MKMapView *mapView;
+@property IBOutlet UITableView *tableView;
 
 @end

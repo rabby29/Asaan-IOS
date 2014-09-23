@@ -1,20 +1,18 @@
 //
-//  ResturantListViewController.m
+//  ResturantDetailViewController.m
 //  Asaan
 //
 //  Created by MC MINI on 9/23/14.
 //  Copyright (c) 2014 Tech Fiesta. All rights reserved.
 //
 
-#import "ResturantListViewController.h"
-#define METERS_PER_MILE 1609.344
+#import "ResturantDetailViewController.h"
 
-
-@interface ResturantListViewController ()
+@interface ResturantDetailViewController ()
 
 @end
 
-@implementation ResturantListViewController
+@implementation ResturantDetailViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -25,13 +23,21 @@
     return self;
 }
 
--(void)viewDidAppear:(BOOL)animated{
-       [self goToLocation];
+- (void)segmentControlInit
+{
+    self.segment.selectedSegmentIndex=0;
+    UIColor *tintcolor=[UIColor colorWithRed:236.0/255.0 green:186.0/255.0 blue:16.0/255.0 alpha:1.0];
+    [[self.segment.subviews objectAtIndex:1] setTintColor:tintcolor];
+    
+    self.tableView.hidden=YES;
+    self.containerView.hidden=NO;
 }
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
+    [self segmentControlInit];
     // Do any additional setup after loading the view.
 }
 
@@ -39,57 +45,47 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
-    
- 
 }
 
--(void)goToLocation{
-   
-    CLLocationCoordinate2D location = [[[self.mapView userLocation] location] coordinate];
+-(IBAction)segmentControl:(id)sender{
+    UISegmentedControl *segment=(UISegmentedControl *)sender;
     
-    NSLog(@"zoom to %f",location.latitude);
-    
-    MKCoordinateRegion viewRegion = MKCoordinateRegionMakeWithDistance(location, 0.6*METERS_PER_MILE, 0.6*METERS_PER_MILE);
-    
-    [self.mapView setRegion:viewRegion animated:YES];
-
+    if(segment.selectedSegmentIndex==0){
+        self.tableView.hidden=YES;
+        self.containerView.hidden=NO;
+    }else{
+        self.tableView.hidden=NO;
+        self.containerView.hidden=YES;
+    }
+   for (int i=0; i<[segment.subviews count]; i++)
+    {
+        if ([[segment.subviews objectAtIndex:i]isSelected] )
+        {
+            UIColor *tintcolor=[UIColor colorWithRed:236.0/255.0 green:186.0/255.0 blue:16.0/255.0 alpha:1.0];
+            [[segment.subviews objectAtIndex:i] setTintColor:tintcolor];
+        }
+        else
+        {
+            [[segment.subviews objectAtIndex:i] setTintColor:nil];
+        }
+    }
 }
+
+#pragma mark -TableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    
-    return 4;
-    
+    return 3;
 }
-
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
 // Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"OrderList"];
     
-    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"resturantListCell"];
-    UILabel *name=(UILabel *)[cell viewWithTag:301];
-    UILabel *desctiprionText=(UILabel *)[cell viewWithTag:302];
-    
-    [self addShadowToText:name];
-    [self addShadowToText:desctiprionText];
     return cell;
 }
 
-- (void)addShadowToText:(UILabel *)textView {
-    NSMutableAttributedString* attString = [[NSMutableAttributedString alloc] initWithString:textView.text];
-    NSRange range = NSMakeRange(0, [attString length]);
-    
-    [attString addAttribute:NSFontAttributeName value:textView.font range:range];
-    [attString addAttribute:NSForegroundColorAttributeName value:textView.textColor range:range];
-    
-    NSShadow* shadow = [[NSShadow alloc] init];
-    shadow.shadowColor = [UIColor grayColor];
-    shadow.shadowOffset = CGSizeMake(0.0f, -1.0f);
-    [attString addAttribute:NSShadowAttributeName value:shadow range:range];
-    
-    textView.attributedText = attString;
-}
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath{
     
@@ -103,7 +99,7 @@
 {
     // Get the new view controller using [segue destinationViewController].
     // Pass the selected object to the new view controller.
-    
+  
     NSLog(@"log");
     [self.tableView deselectRowAtIndexPath:[self.tableView indexPathForSelectedRow] animated:YES];
 }

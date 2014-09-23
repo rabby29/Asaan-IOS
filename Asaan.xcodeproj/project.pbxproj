@@ -89,6 +89,7 @@
 		9AB3A96D19C98A7300C98D8D /* Social.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AB3A96C19C98A7300C98D8D /* Social.framework */; };
 		9AB8389119CFE7D900F7D334 /* InviteFriendsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8389019CFE7D900F7D334 /* InviteFriendsViewController.m */; };
 		9AB8389519CFF39E00F7D334 /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AB8389419CFF39E00F7D334 /* MBProgressHUD.m */; };
+		9AF9C4CF19D184ED00E85A39 /* ResturantDetailViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AF9C4CE19D184ED00E85A39 /* ResturantDetailViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -217,6 +218,8 @@
 		9AB8389019CFE7D900F7D334 /* InviteFriendsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = InviteFriendsViewController.m; sourceTree = "<group>"; };
 		9AB8389319CFF39E00F7D334 /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		9AB8389419CFF39E00F7D334 /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
+		9AF9C4CD19D184ED00E85A39 /* ResturantDetailViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ResturantDetailViewController.h; sourceTree = "<group>"; };
+		9AF9C4CE19D184ED00E85A39 /* ResturantDetailViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ResturantDetailViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -335,6 +338,8 @@
 				9A1F2A1919BEFF1100CBF581 /* AccountViewController.m */,
 				9A5971F019D16BD60047D1CE /* ResturantListViewController.h */,
 				9A5971F119D16BD60047D1CE /* ResturantListViewController.m */,
+				9AF9C4CD19D184ED00E85A39 /* ResturantDetailViewController.h */,
+				9AF9C4CE19D184ED00E85A39 /* ResturantDetailViewController.m */,
 				9A59722519CEDEAF00333E7A /* Helper Classes */,
 				9A1F29B619BED4CA00CBF581 /* Images.xcassets */,
 				9A1F29A519BED4C900CBF581 /* Supporting Files */,
@@ -674,6 +679,7 @@
 				9AB8389519CFF39E00F7D334 /* MBProgressHUD.m in Sources */,
 				9A5D6A4519CE87830051DB88 /* PTKCardNumber.m in Sources */,
 				9A5D6A4619CE87830051DB88 /* PTKComponent.m in Sources */,
+				9AF9C4CF19D184ED00E85A39 /* ResturantDetailViewController.m in Sources */,
 				9A5D6A9219CE8A0B0051DB88 /* STPUtils.m in Sources */,
 				9A5D6A8E19CE8A0B0051DB88 /* STPAPIConnection.m in Sources */,
 				9A59722E19CEF59C00333E7A /* PaymentInfo.m in Sources */,
