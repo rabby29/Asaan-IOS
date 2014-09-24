@@ -15,4 +15,6 @@
 
 
 @property (retain, nonatomic) IBOutlet GPPSignInButton *signInButton;
+
+@property IBOutlet UIImageView *image;
 @end

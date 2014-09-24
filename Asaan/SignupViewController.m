@@ -31,6 +31,7 @@
     [super viewDidLoad];
     // Do any additional setup after loading the view.
     
+    self.navigationController.navigationBarHidden=NO;
     [self initBirthdatePicker];
     [self actionBarInit];
     
@@ -58,17 +59,26 @@
     pagecontrol.pageIndicatorTintColor=[UIColor whiteColor];
     pagecontrol.userInteractionEnabled=NO;
 
-    self.birthdate.layer.borderColor=[[UIColor colorWithRed:(187.0/255.0) green:(137.0/255.0) blue:(33.0/255.0) alpha:1.0f] CGColor];
-   // self.birthdate.layer.borderWidth=2.0f;
-    NSLog(@"log");
-    self.navigationItem.titleView =pagecontrol;
     
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    [button setTitle:@">" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    //self.navigationItem.titleView =pagecontrol;
+    
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    [button setBackgroundImage:[UIImage imageNamed:@"nextSinguppage.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(nextPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *btn=[[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.rightBarButtonItem=btn;
+    
+
+ 
+    UIButton *imgbtn=[[UIButton alloc]initWithFrame:CGRectMake(-10, 0, 125, 40)];
+    [imgbtn setImage:[UIImage imageNamed:@"asaanTopLogo.png"] forState:UIControlStateNormal];
+    
+    UIBarButtonItem *lbtn=[[UIBarButtonItem alloc]initWithCustomView:imgbtn];
+    UIBarButtonItem *mbtn=[[UIBarButtonItem alloc]initWithCustomView:pagecontrol];
+    
+    [self.navigationItem setLeftBarButtonItems:@[lbtn,mbtn]];
+    
 }
 
 

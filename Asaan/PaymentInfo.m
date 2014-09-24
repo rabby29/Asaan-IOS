@@ -47,16 +47,23 @@
     pagecontrol.pageIndicatorTintColor=[UIColor whiteColor];
     pagecontrol.userInteractionEnabled=NO;
     pagecontrol.currentPage=1;
-    NSLog(@"log");
-    self.navigationItem.titleView =pagecontrol;
-    
-    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 20, 20)];
-    [button setTitle:@">" forState:UIControlStateNormal];
-    [button setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+
+    UIButton *button = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
+    [button setBackgroundImage:[UIImage imageNamed:@"nextSinguppage.png"] forState:UIControlStateNormal];
     [button addTarget:self action:@selector(nextPressed:) forControlEvents:UIControlEventTouchUpInside];
     UIBarButtonItem *btn=[[UIBarButtonItem alloc]initWithCustomView:button];
     self.navigationItem.rightBarButtonItem=btn;
-}
+    
+
+    
+    
+    UIButton *imgbtn=[[UIButton alloc]initWithFrame:CGRectMake(-10, 0, 125, 40)];
+    [imgbtn setImage:[UIImage imageNamed:@"asaanTopLogo.png"] forState:UIControlStateNormal];
+    
+    UIBarButtonItem *lbtn=[[UIBarButtonItem alloc]initWithCustomView:imgbtn];
+    UIBarButtonItem *mbtn=[[UIBarButtonItem alloc]initWithCustomView:pagecontrol];
+    
+    [self.navigationItem setLeftBarButtonItems:@[lbtn,mbtn]];}
 
 -(void)nextPressed:(id)sender{
     InviteFriendsViewController *paytmentInfo=[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"Signup3"];

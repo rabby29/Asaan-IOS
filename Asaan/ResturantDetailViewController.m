@@ -74,7 +74,7 @@
 #pragma mark -TableView
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
-    return 3;
+    return 5;
 }
 
 // Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
@@ -82,6 +82,16 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"OrderList"];
+    UIView *selectedView = [[UIView alloc]initWithFrame:cell.frame];
+    
+    selectedView.backgroundColor=[UIColor colorWithRed:(103.0/255.0) green:(103.0/255.0) blue:(103.0/255.0) alpha:1];
+    
+    UIView *viewTop=[[UIView alloc]initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 79)];
+    
+    viewTop.backgroundColor = [UIColor grayColor];
+    [selectedView addSubview:viewTop];
+    
+    cell.selectedBackgroundView =  selectedView;
     
     return cell;
 }

@@ -14,6 +14,7 @@
 #import <AddressBook/AddressBook.h>
 #import "MBProgressHUD.h"
 #import "ResturantListViewController.h"
+#import "LoginViewController.h"
 
 @interface ViewController ()
 
@@ -26,9 +27,21 @@
     [super viewDidLoad];
     [self GplusInit];
     [self askContactsPermission];
+    
+    int height=[UIScreen mainScreen].bounds.size.height;
+    if(height==480){
+        [self.image setImage:[UIImage imageNamed:@"landingpage2.png"]];
+
+        
+     }
+    
+    self.navigationController.navigationBarHidden=YES;
 }
 
+-(void)viewWillAppear:(BOOL)animated{
+    self.navigationController.navigationBarHidden=YES;
 
+}
 
 #pragma mark -FBLogin
 
@@ -59,7 +72,7 @@
            // [self _loadData];
 
             AccountViewController *acv=[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"profile"];
-            [self presentViewController:acv animated:YES completion:nil];
+            [self.navigationController pushViewController:acv animated:YES];
 
         }
     }];
@@ -159,12 +172,16 @@
 
 -(IBAction)skipe:(id)sender{
  
-   // ResturantListViewController *rvc=[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"rabbi101"];
+  //  ResturantListViewController *rvc=[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"rabbi101"];
     
     //[self presentViewController:rvc animated:YES completion:nil];
 }
 
-
+-(IBAction)login:(id)sender{
+ 
+    LoginViewController *login=[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"login"];
+    [self presentSignInViewController:login];
+}
 
 
 

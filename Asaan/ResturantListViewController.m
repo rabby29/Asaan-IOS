@@ -32,6 +32,8 @@
 {
     [super viewDidLoad];
     
+    self.navigationController.navigationBarHidden=NO;
+    
     // Do any additional setup after loading the view.
 }
 
@@ -68,6 +70,19 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
     
     UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"resturantListCell"];
+
+    UIView *selectedView = [[UIView alloc]initWithFrame:cell.frame];
+    
+    selectedView.backgroundColor=[UIColor colorWithRed:(103.0/255.0) green:(103.0/255.0) blue:(103.0/255.0) alpha:1];
+    
+    UIView *viewTop=[[UIView alloc]initWithFrame:CGRectMake(0, 0, cell.frame.size.width, 79)];
+    
+    viewTop.backgroundColor = [UIColor grayColor];
+    [selectedView addSubview:viewTop];
+    
+    cell.selectedBackgroundView =  selectedView;
+    
+    
     UILabel *name=(UILabel *)[cell viewWithTag:301];
     UILabel *desctiprionText=(UILabel *)[cell viewWithTag:302];
     

@@ -8,6 +8,7 @@
 
 #import "AccountViewController.h"
 #import "Stripe.h"
+#import "ResturantListViewController.h"
 
 @interface AccountViewController ()
 
@@ -27,6 +28,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    self.navigationController.navigationBarHidden=NO;
     // Do any additional setup after loading the view.
 }
 
