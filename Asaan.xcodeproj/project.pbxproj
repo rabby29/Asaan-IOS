@@ -22,7 +22,7 @@
 		9A1F29CA19BED4CA00CBF581 /* AsaanTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1F29C919BED4CA00CBF581 /* AsaanTests.m */; };
 		9A1F2A1419BEEA0C00CBF581 /* SignupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1F2A1319BEEA0C00CBF581 /* SignupViewController.m */; };
 		9A1F2A1619BEFCA200CBF581 /* person_placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 9A1F2A1519BEFCA200CBF581 /* person_placeholder.png */; };
-		9A1F2A1A19BEFF1100CBF581 /* AccountViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1F2A1919BEFF1100CBF581 /* AccountViewController.m */; };
+		9A1F2A1A19BEFF1100CBF581 /* ProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1F2A1919BEFF1100CBF581 /* ProfileViewController.m */; };
 		9A3D8AF619CD7D3D00BE1F25 /* FacebookSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A3D8AF519CD7D3D00BE1F25 /* FacebookSDK.framework */; };
 		9A3D8B0319CD7F2D00BE1F25 /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A1F29D519BED99700CBF581 /* AddressBook.framework */; };
 		9A3D8B0419CD7F3800BE1F25 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9A1F29D719BED99D00CBF581 /* AssetsLibrary.framework */; };
@@ -153,8 +153,8 @@
 		9A1F2A1219BEEA0B00CBF581 /* SignupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SignupViewController.h; sourceTree = "<group>"; };
 		9A1F2A1319BEEA0C00CBF581 /* SignupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SignupViewController.m; sourceTree = "<group>"; };
 		9A1F2A1519BEFCA200CBF581 /* person_placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = person_placeholder.png; sourceTree = "<group>"; };
-		9A1F2A1819BEFF1100CBF581 /* AccountViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountViewController.h; sourceTree = "<group>"; };
-		9A1F2A1919BEFF1100CBF581 /* AccountViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountViewController.m; sourceTree = "<group>"; };
+		9A1F2A1819BEFF1100CBF581 /* ProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProfileViewController.h; sourceTree = "<group>"; };
+		9A1F2A1919BEFF1100CBF581 /* ProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProfileViewController.m; sourceTree = "<group>"; };
 		9A3D8AF519CD7D3D00BE1F25 /* FacebookSDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FacebookSDK.framework; sourceTree = "<group>"; };
 		9A4DA0E519CD940E002EEA67 /* GoogleOpenSource.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = GoogleOpenSource.framework; sourceTree = "<group>"; };
 		9A4DA0E619CD940E002EEA67 /* GooglePlus.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = GooglePlus.bundle; sourceTree = "<group>"; };
@@ -580,8 +580,8 @@
 				9A59722D19CEF59C00333E7A /* PaymentInfo.m */,
 				9AB8388F19CFE7D900F7D334 /* InviteFriendsViewController.h */,
 				9AB8389019CFE7D900F7D334 /* InviteFriendsViewController.m */,
-				9A1F2A1819BEFF1100CBF581 /* AccountViewController.h */,
-				9A1F2A1919BEFF1100CBF581 /* AccountViewController.m */,
+				9A1F2A1819BEFF1100CBF581 /* ProfileViewController.h */,
+				9A1F2A1919BEFF1100CBF581 /* ProfileViewController.m */,
 				9A5971F019D16BD60047D1CE /* ResturantListViewController.h */,
 				9A5971F119D16BD60047D1CE /* ResturantListViewController.m */,
 				9AF9C4CD19D184ED00E85A39 /* ResturantDetailViewController.h */,
@@ -651,6 +651,9 @@
 					9A1F299A19BED4C900CBF581 = {
 						DevelopmentTeam = V39QP9S6S6;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.InAppPurchase = {
 								enabled = 1;
 							};
@@ -758,7 +761,7 @@
 				9A9E503F19D2CB05001F2C64 /* LoginViewController.m in Sources */,
 				9A5D6A4719CE87830051DB88 /* PTKTextField.m in Sources */,
 				9A5D6A9119CE8A0B0051DB88 /* STPToken.m in Sources */,
-				9A1F2A1A19BEFF1100CBF581 /* AccountViewController.m in Sources */,
+				9A1F2A1A19BEFF1100CBF581 /* ProfileViewController.m in Sources */,
 				9A1F29B519BED4C900CBF581 /* ViewController.m in Sources */,
 				9A5D6A9019CE8A0B0051DB88 /* STPTestPaymentAuthorizationViewController.m in Sources */,
 				9AB8389119CFE7D900F7D334 /* InviteFriendsViewController.m in Sources */,

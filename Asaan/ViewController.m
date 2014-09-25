@@ -9,7 +9,7 @@
 #import "ViewController.h"
 #import <ParseFacebookUtils/PFFacebookUtils.h>
 #import <GoogleOpenSource/GoogleOpenSource.h>
-#import "AccountViewController.h"
+#import "ProfileViewController.h"
 #import "SignupViewController.h"
 #import <AddressBook/AddressBook.h>
 #import "MBProgressHUD.h"
@@ -18,24 +18,44 @@
 
 @interface ViewController ()
 
+
 @end
 
+static NSString * const kClientId = @"622430232205-vjs2qkqr73saoov2vacspnctvig7nq6r.apps.googleusercontent.com";
 @implementation ViewController
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     [self GplusInit];
+    
     [self askContactsPermission];
     
     int height=[UIScreen mainScreen].bounds.size.height;
     if(height==480){
         [self.image setImage:[UIImage imageNamed:@"landingpage2.png"]];
-
-        
      }
     
+    if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 8.0)
+    {
+        locationmanager=[[CLLocationManager alloc]init];
+        //  manager.delegate = self;
+       // [locationmanager requestWhenInUseAuthorization];
+    }else{
+          locationmanager=[[CLLocationManager alloc]init];
+        [locationmanager startUpdatingLocation];
+        [locationmanager stopUpdatingLocation];
+    }
+    
+    
+    hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    hud.hidden=YES;
+    
     self.navigationController.navigationBarHidden=YES;
+    
+    [PFUser logOut];
+    [[GPPSignIn sharedInstance] signOut];
+    
 }
 
 -(void)viewWillAppear:(BOOL)animated{
@@ -48,10 +68,10 @@
 -(IBAction)fbLogin:(id)sender{
     NSArray *permissions=@[@"public_profile", @"user_friends",@"email",@"user_birthday"];
     
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+   
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Please Wait";
-    
+    hud.hidden=NO;
     [PFFacebookUtils logInWithPermissions:permissions block:^(PFUser *user, NSError *error) {
         if (!user) {
               hud.hidden=YES;
@@ -71,7 +91,7 @@
             hud.hidden=YES;
            // [self _loadData];
 
-            AccountViewController *acv=[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"profile"];
+            ProfileViewController *acv=[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"profile"];
             [self.navigationController pushViewController:acv animated:YES];
 
         }
@@ -80,7 +100,8 @@
 }
 - (void)_loadData {
     
-    MBProgressHUD *hud = [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+   
+    
     hud.mode = MBProgressHUDModeIndeterminate;
     hud.labelText = @"Please Wait";
     
@@ -110,7 +131,7 @@
 
             [user saveInBackgroundWithBlock:^(BOOL complete,NSError *error){
                 
-                AccountViewController *acv=[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"profile"];
+                ProfileViewController *acv=[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"profile"];
                 [self.navigationController pushViewController:acv animated:YES];
                 
                 hud.hidden=YES;
@@ -130,26 +151,31 @@
 #pragma mark -gPlus login
 
 -(void)GplusInit{
+    
+    
+    
     GPPSignIn *signIn = [GPPSignIn sharedInstance];
     signIn.shouldFetchGooglePlusUser = YES;
-    signIn.clientID = @"1041863510961-fmarksr003s0fvdisitq7lff8jlub2pa.apps.googleusercontent.com";
+    signIn.clientID = kClientId;
     
     
-    signIn.scopes = @[ kGTLAuthScopePlusLogin ];
+    signIn.scopes = @[ kGTLAuthScopePlusLogin,kGTLAuthScopePlusUserinfoEmail,kGTLAuthScopePlusUserinfoProfile];
     signIn.delegate = self;
+    signIn.shouldFetchGoogleUserEmail = YES;
+
+
 }
 
 -(IBAction)gPlusLogin:(id)sender{
     NSLog(@"log");
+ 
+    hud.mode = MBProgressHUDModeIndeterminate;
+    hud.labelText = @"Please Wait";
+    hud.hidden=NO;
+
     [[GPPSignIn sharedInstance] authenticate];
 }
 
-
-
-- (void)finishedWithAuth: (GTMOAuth2Authentication *)auth
-                   error: (NSError *) error {
-    NSLog(@"Received error %@ and auth object %@",error, auth);
-}
 
 - (void)presentSignInViewController:(UIViewController *)viewController {
     // This is an example of how you can implement it if your app is navigation-based.
@@ -157,11 +183,97 @@
     [[self navigationController] pushViewController:viewController animated:YES];
 }
 
+- (void)finishedWithAuth: (GTMOAuth2Authentication *)auth
+                   error: (NSError *) error {
+   
+    if(!error) {
+        // Get the email address.
+        hud.hidden=YES;
+        [self FatchDatafromGplusWithAuth:auth];
+        
+    }else{
+        hud.hidden=YES;
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:[error localizedFailureReason] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles: nil];
+        [alert show];
+    }
+}
 
 
 
+-(void)FatchDatafromGplusWithAuth:(GTMOAuth2Authentication *)auth{
+    NSLog(@"%@", [GPPSignIn sharedInstance].authentication.userEmail);
+    
+    GTLServicePlus* plusService = [[GTLServicePlus alloc] init] ;
+    plusService.retryEnabled = YES;
+    [plusService setAuthorizer:[GPPSignIn sharedInstance].authentication];
+    
+    GTLQueryPlus *query = [GTLQueryPlus queryForPeopleGetWithUserId:@"me"];
+    hud.hidden=NO;
+    [plusService executeQuery:query
+            completionHandler:^(GTLServiceTicket *ticket,
+                                GTLPlusPerson *person,
+                                NSError *error) {
+                if (error) {
+                    hud.hidden=YES;
+                    GTMLoggerError(@"Error: %@", error);
+                } else {
+                    // Retrieve the display name and "about me" text
+                
+        
+                   
+                    [self loginWithParseGplus:person];
+                    
+                }
+            }];
+    
+}
 
+-(void)loginWithParseGplus:(GTLPlusPerson *)person{
+   
 
+    [PFUser logInWithUsernameInBackground:person.identifier password:person.ETag block:^(PFUser *user,NSError *error){
+        if(error)
+        {
+ 
+            NSLog(@"%@",[error localizedDescription]);
+            [self sighupWithParseGplus:person];
+        }else{
+            hud.hidden=YES;
+            ProfileViewController *acv=[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"profile"];
+            [self.navigationController pushViewController:acv animated:YES];
+            
+
+        }
+        
+    }];
+}
+-(void)sighupWithParseGplus:(GTLPlusPerson *)person{
+    PFUser *user=[PFUser user];
+    user.email=[GPPSignIn sharedInstance].authentication.userEmail;
+    user.password=person.ETag;
+    user.username=person.identifier;
+    
+    NSLog(@"%@",person.ETag);
+    user[@"firstName"]=person.name.givenName;
+    user[@"lastName"]=person.name.familyName;
+    
+    [user signUpInBackgroundWithBlock:^(BOOL issuccess,NSError *error){
+        hud.hidden=YES;
+        if(issuccess && !error){
+            NSLog(@"registration successful");
+            ProfileViewController *acv=[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"profile"];
+            [self.navigationController pushViewController:acv animated:YES];
+            
+        }else{
+           
+            UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Error" message:[[error userInfo] objectForKey:@"error"] delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+            [alert show];
+        }
+    }];
+
+}
+
+#pragma mark -Page button
 
 -(IBAction)Signup:(id)sender{
     SignupViewController *svc=[[UIStoryboard storyboardWithName:@"Main" bundle:nil]instantiateViewControllerWithIdentifier:@"Signup1"];

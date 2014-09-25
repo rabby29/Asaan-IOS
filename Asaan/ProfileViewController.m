@@ -6,15 +6,15 @@
 //  Copyright (c) 2014 Tech Fiesta. All rights reserved.
 //
 
-#import "AccountViewController.h"
+#import "ProfileViewController.h"
 #import "Stripe.h"
 #import "ResturantListViewController.h"
 
-@interface AccountViewController ()
+@interface ProfileViewController ()
 
 @end
 
-@implementation AccountViewController
+@implementation ProfileViewController
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -29,9 +29,18 @@
 {
     [super viewDidLoad];
     self.navigationController.navigationBarHidden=NO;
+    [self setDataOnUI];
     // Do any additional setup after loading the view.
 }
 
+-(void)setDataOnUI{
+    PFUser *user=[PFUser currentUser];
+    self.nameLable.text=[NSString stringWithFormat:@"%@ %@",user[@"firstName"],user[@"lastName"]];
+    self.emailLable.text=user.email;
+    if(user[@"phone"]){
+        self.phoneLable.text=user[@"phone"];
+    }
+}
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -49,6 +58,10 @@
     [alert setValue:self.paymentView forKey:@"accessoryView"];
     
     [alert show];
+}
+
+-(IBAction)inviteFriends:(id)sender{
+    [self performSegueWithIdentifier:@"inviteFriends" sender:self];
 }
 
 - (void) paymentView:(PTKView*)paymentView withCard:(PTKCard *)card isValid:(BOOL)valid

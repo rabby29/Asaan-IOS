@@ -8,9 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import <GooglePlus/GooglePlus.h>
+#import "MBProgressHUD.h"
+#import <CoreLocation/CoreLocation.h>
 @class GPPSignInButton;
 
-@interface ViewController : UIViewController<GPPSignInDelegate>
+@interface ViewController : UIViewController<GPPSignInDelegate>{
+    MBProgressHUD *hud;
+    CLLocationManager *locationmanager;
+}
 
 
 

@@ -10,9 +10,13 @@
 #import "PTKView.h"
 
 
-@interface AccountViewController : UIViewController<PTKViewDelegate,UIAlertViewDelegate>{
+@interface ProfileViewController : UIViewController<PTKViewDelegate,UIAlertViewDelegate>{
     UIAlertView *alert;
 }
 @property IBOutlet PTKView* paymentView;
+@property IBOutlet UILabel* nameLable;
+@property IBOutlet UILabel* emailLable;
+@property IBOutlet UILabel* phoneLable;
+@property IBOutlet UIImageView *profileImage;
 
 @end
