@@ -66,7 +66,7 @@ static NSString * const kClientId = @"622430232205-vjs2qkqr73saoov2vacspnctvig7n
 #pragma mark -FBLogin
 
 -(IBAction)fbLogin:(id)sender{
-    NSArray *permissions=@[@"public_profile", @"user_friends",@"email",@"user_birthday"];
+    NSArray *permissions=@[@"public_profile", @"user_friends",@"email"];
     
    
     hud.mode = MBProgressHUDModeIndeterminate;

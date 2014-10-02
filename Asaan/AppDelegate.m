@@ -18,8 +18,8 @@
 {
     // Override point for customization after application launch.
    
-    [Parse setApplicationId:@"Th2F4NtNG8bQ9nvK4c9uEY9cSNSCsc8EoApW9dMk"
-                  clientKey:@"SWkkfvuIU8emrlnVn2nN2f4vzz6YPyLstAEu5rXl"];
+    [Parse setApplicationId:@"uX5Pxp1cPWJUbhl4qp5REJskOqDIp33tfMcSu1Ac"
+                  clientKey:@"4cad0RAqv53bvlmgiTgnOScuJVk7IY28XeH4Mes5"];
      [PFFacebookUtils initializeFacebook];
      [Stripe setDefaultPublishableKey:@"pk_test_hlpADPUOWaxn6uN0aATgLivW"];
   

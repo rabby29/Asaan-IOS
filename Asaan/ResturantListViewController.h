@@ -10,7 +10,9 @@
 #import <Parse/Parse.h>
 #import <MapKit/MapKit.h>
 
-@interface ResturantListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MKMapViewDelegate>
+@interface ResturantListViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,MKMapViewDelegate>{
+    NSMutableArray *resturantList;
+}
 
 @property IBOutlet MKMapView *mapView;
 @property IBOutlet UITableView *tableView;

@@ -9,7 +9,9 @@
 #import <UIKit/UIKit.h>
 #import "PTKView.h"
 
-@interface PaymentInfo : UIViewController<PTKViewDelegate,UITextFieldDelegate>
+@interface PaymentInfo : UIViewController<PTKViewDelegate,UITextFieldDelegate>{
+    BOOL isCardValid;
+}
 
 @property IBOutlet PTKView *payment;
 

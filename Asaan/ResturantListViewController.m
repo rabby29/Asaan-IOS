@@ -26,15 +26,21 @@
 }
 
 -(void)viewDidAppear:(BOOL)animated{
-       [self goToLocation];
+    [self goToLocation];
+    
 }
+
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
     self.navigationController.navigationBarHidden=NO;
+    resturantList=[[NSMutableArray alloc]init];
     
-    // Do any additional setup after loading the view.
+    [self fetchRestrurant];
+    
+
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,6 +49,23 @@
     // Dispose of any resources that can be recreated.
     
  
+}
+
+-(void)fetchRestrurant{
+    PFQuery *query = [PFQuery queryWithClassName:@"Store"];
+    
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            // The find succeeded.
+            NSLog(@"Successfully retrieved %d scores.", objects.count);
+            // Do something with the found objects
+            [resturantList addObjectsFromArray:objects];
+            [self.tableView reloadData];
+        } else {
+            // Log details of the failure
+            NSLog(@"Error: %@ %@", error, [error userInfo]);
+        }
+    }];
 }
 
 -(void)goToLocation{
@@ -59,18 +82,12 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section{
     
-    return 4;
+    return resturantList.count;
     
 }
 
 
-// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
-// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
-    
-    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"resturantListCell"];
-
+- (void)addcellBackground:(UITableViewCell *)cell {
     UIView *selectedView = [[UIView alloc]initWithFrame:cell.frame];
     
     selectedView.backgroundColor=[UIColor colorWithRed:(103.0/255.0) green:(103.0/255.0) blue:(103.0/255.0) alpha:1];
@@ -81,18 +98,30 @@
     [selectedView addSubview:viewTop];
     
     cell.selectedBackgroundView =  selectedView;
+}
+
+// Row display. Implementers should *always* try to reuse cells by setting each cell's reuseIdentifier and querying for available reusable cells with dequeueReusableCellWithIdentifier:
+// Cell gets various attributes set automatically based on table (separators) and data source (accessory views, editing controls)
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath{
+    
+    UITableViewCell *cell=[tableView dequeueReusableCellWithIdentifier:@"resturantListCell"];
+
+    [self addcellBackground:cell];
     
     
     UILabel *name=(UILabel *)[cell viewWithTag:301];
     UILabel *desctiprionText=(UILabel *)[cell viewWithTag:302];
     
-    [self addShadowToText:name];
-    [self addShadowToText:desctiprionText];
+    PFObject *resturant=[resturantList objectAtIndex:indexPath.row];
+    
+    [self addShadowToText:name withText:resturant[@"name"]];
+    [self addShadowToText:desctiprionText withText:resturant[@"cuisineType"]];
     return cell;
 }
 
-- (void)addShadowToText:(UILabel *)textView {
-    NSMutableAttributedString* attString = [[NSMutableAttributedString alloc] initWithString:textView.text];
+- (void)addShadowToText:(UILabel *)textView withText:(NSString *)text{
+    NSMutableAttributedString* attString = [[NSMutableAttributedString alloc] initWithString:text];
     NSRange range = NSMakeRange(0, [attString length]);
     
     [attString addAttribute:NSFontAttributeName value:textView.font range:range];

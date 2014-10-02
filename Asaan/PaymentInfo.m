@@ -8,6 +8,10 @@
 
 #import "PaymentInfo.h"
 #include "InviteFriendsViewController.h"
+#import "Stripe.h"
+#import "MBProgressHUD.h"
+#import <Parse/Parse.h>
+
 
 @interface PaymentInfo ()
 
@@ -35,6 +39,7 @@
     //paymentView.delegate = self;
     //self.payment = paymentView;
     //[self.view addSubview:paymentView];
+    isCardValid=NO;
     
     [self actionBarInit];
 }
@@ -80,10 +85,45 @@
 
 
 - (void)paymentView:(PTKView *)paymentView withCard:(PTKCard *)card isValid:(BOOL)valid{
+ 
+    isCardValid=valid;
+}
+
+-(IBAction)addCard:(id)sender{
+    if(!isCardValid){
+        UIAlertView *alert=[[UIAlertView alloc]initWithTitle:@"Error" message:@"The card number you have enterd is not a valid card number" delegate:nil cancelButtonTitle:@"Ok" otherButtonTitles:nil];
+        [alert show];
+        return;
+    }
+    STPCard *card = [[STPCard alloc] init];
+    card.number = self.payment.card.number;
+    card.expMonth = self.payment.card.expMonth;
+    card.expYear = self.payment.card.expYear;
+    card.cvc = self.payment.card.cvc;
+    
+
+    [MBProgressHUD showHUDAddedTo:self.view animated:YES];
+    [Stripe createTokenWithCard:card completion:^(STPToken *token, NSError *error) {
+        if (error) {
+            // handle the error as you did previously
+            
+            UIAlertView *alert1=[[UIAlertView alloc]initWithTitle:@"Error" message:[error.userInfo description] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+            [alert1 show];
+        } else {
+            NSLog(@"%@",token.tokenId);
+            
+            
+            // submit the token to your payment backend as you did previously
+        }
+    }];
+    
     
 }
 
+-(void)addCardToServer:(STPCard *)card token:(NSString *)token{
 
+    //PFObject *card=[PFObject objectWithClassName:@""];
+}
 
 - (void)didReceiveMemoryWarning
 {
