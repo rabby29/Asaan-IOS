@@ -53,8 +53,8 @@ static NSString * const kClientId = @"622430232205-vjs2qkqr73saoov2vacspnctvig7n
     
     self.navigationController.navigationBarHidden=YES;
     
-    [PFUser logOut];
-    [[GPPSignIn sharedInstance] signOut];
+   // [PFUser logOut];
+    //[[GPPSignIn sharedInstance] signOut];
     
 }
 
